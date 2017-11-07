@@ -1,11 +1,11 @@
 defmodule Fuentes.Mixfile do
   use Mix.Project
 
-  @version "0.0.3"
+  @version "0.0.4"
   def project do
     [app: :fuentes,
      version: @version,
-     elixir: "~> 1.2",
+     elixir: "~> 1.5",
      elixirc_paths: elixirc_paths(Mix.env),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -33,7 +33,7 @@ defmodule Fuentes.Mixfile do
 
   defp deps do
     [
-      {:ecto, "~> 2.0.0-rc.5"},
+      {:ecto, "~> 2.1"},
       {:postgrex, ">= 0.0.0"},
       {:ex_machina, git: "https://github.com/thoughtbot/ex_machina", branch: "master", only: :test},
       {:earmark, ">= 0.0.0", only: :dev},
@@ -49,9 +49,9 @@ defmodule Fuentes.Mixfile do
 
   defp package do
     [
-      maintainers: ["David Kuhta"],
+      maintainers: ["David Kuhta", "Jason Clark"],
       licenses: ["Apache 2.0"],
-      links: %{"GitHub" => "https://github.com/davidkuhta/fuentes"}
+      links: %{"GitHub" => "https://github.com/elixir-twister/fuentes"}
     ]
   end
 
