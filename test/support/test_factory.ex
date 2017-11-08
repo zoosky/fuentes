@@ -7,7 +7,8 @@ defmodule Fuentes.TestFactory do
     %Account{
       name: "My Assets",
       type: "asset",
-      contra: false
+      contra: false,
+      uuid: generate_rand_string()
     }
   end
 
@@ -33,5 +34,11 @@ defmodule Fuentes.TestFactory do
       type: "debit",
       account_id: 2
     }
+  end
+
+  def generate_rand_string()do
+     Enum.reduce((1..16), [], fn (_i, acc) ->
+          [Enum.random(@chars) | acc]
+        end) |> Enum.join("")
   end
 end
