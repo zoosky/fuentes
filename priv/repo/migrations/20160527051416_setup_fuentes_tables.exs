@@ -10,7 +10,7 @@ defmodule Fuentes.Repo.Migrations.SetupFuentesTables do
 
       timestamps
     end
-    create index(:accounts, [:name, :type])
+    create index(:accounts, [:name, :type, :uuid])
 
     create table(:entries) do
       add :description, :string, null: false

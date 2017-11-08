@@ -11,6 +11,6 @@ defmodule Fuentes.TestRepo.Migrations.AddAccountsTable do
       timestamps
     end
 
-    create index(:accounts, [:name, :type])
+    create index(:accounts, [:name, :type, :uuid])
   end
 end
