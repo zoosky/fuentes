@@ -5,6 +5,7 @@ defmodule Fuentes.TestRepo.Migrations.AddAccountsTable do
     create table(:accounts) do
       add :name, :string, null: false
       add :type, :string, null: false
+      add :uuid, :string, null: false
       add :contra, :boolean, default: false
 
       timestamps

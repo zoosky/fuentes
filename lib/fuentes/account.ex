@@ -30,7 +30,7 @@ defmodule Fuentes.Account do
   """
 
   @typedoc "A Fuentes Account type."
-  @type t :: %__MODULE__{ name: String.t, type: String.t, contra: Boolean.t, amounts: [Fuentes.Amount] }
+  @type t :: %__MODULE__{ name: String.t, type: String.t, contra: Boolean.t, uuid: String.t, amounts: [Fuentes.Amount] }
 
   alias Fuentes.{ Account, Amount, Config }
 
@@ -38,9 +38,11 @@ defmodule Fuentes.Account do
   import Ecto.Changeset
   import Ecto.Query, only: [from: 1, from: 2]
 
+
   schema "accounts" do
     field :name, :string
     field :type, :string
+    field :uuid, :string
     field :contra, :boolean, default: false
     field :balance, :decimal, virtual: true
 
@@ -49,7 +51,7 @@ defmodule Fuentes.Account do
     timestamps
   end
 
-  @fields ~w(name type contra)
+  @fields ~w(name type contra uuid)
 
   @credit_types ["asset"]
   @debit_types ["liability", "equity"]
@@ -62,6 +64,17 @@ defmodule Fuentes.Account do
     |> cast(params, @fields)
     |> validate_required([:name, :type])
     |> validate_inclusion(:type, @credit_types ++ @debit_types)
+  end
+
+  @doc """
+  Creates a changeset requiring a `:name` and `:type`
+  """
+  def uniq_account_changeset(model, params \\ %{}) do
+    model
+    |> cast(params, @fields)
+    |> validate_required([:name, :type])
+    |> validate_inclusion(:type, @credit_types ++ @debit_types)
+    |> generate_uuid
   end
 
   defp with_amounts(query) do
@@ -158,4 +171,43 @@ defmodule Fuentes.Account do
     |> Decimal.sub(accounts_by_type[:liability])
     |> Decimal.sub(accounts_by_type[:equity])
   end
+
+  @doc """
+  Create default accounts for a user
+  """
+  def create_accounts() do
+
+  asset_struct = %{ name: "Assets", type: "asset" }
+
+
+  { _, debit_account } = %Account{}
+                          |> Account.uniq_account_changeset(asset_struct)
+                          |> Repo.insert()
+
+  liablilty_struct = %{ name: "Liabilities", type: "liabilities", uuid: debit_account.uuid }
+
+  { _, credit_account } = %Account{}
+                           |> Account.changeset(liablilty_struct)
+                           |> Repo.insert()
+
+  equity_struct = %{ name: "Equity", type: "liabilities", uuid: debit_account.uuid }
+
+  { _, equity_account } = %Account{}
+                           |> Account.changeset(equity_struct)
+                           |> Repo.insert()
+
+   %{ accounts: [ debit_account, credit_account, equity_account ] }
+  end
+
+
+  @doc """
+    generates a unique id for the account
+    """
+
+  defp generate_uuid(changeset) do
+
+   changeset
+   |> put_change(:uuid, Ecto.UUID.generate)
+  end
+  
 end
