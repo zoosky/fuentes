@@ -115,7 +115,7 @@ defmodule Fuentes.Account do
 
   @spec balance(Ecto.Repo.t, [Fuentes.Account.t], Ecto.Date.t) :: Decimal.t
   def balance(repo \\ Config.repo, account_or_account_list)
-  def balance(repo \\ Config.repo, account_or_account_list, dates \\ nil)
+  def balance(repo \\ Config.repo, account_or_account_list, dates)
 
   # Balance for individual account
   def balance(repo, account = %Account { type: type, contra: contra }, dates) when is_nil(dates) do
