@@ -20,25 +20,16 @@ defmodule Fuentes.Repo.Migrations.SetupFuentesTables do
     end
     create index(:entries, [:date])
 
-    create table(:credit_amounts) do
+    create table(:amounts) do
       add :amount, :decimal, precision: 20, scale: 10, null: false
       add :account_id, references(:accounts, on_delete: :delete_all), null: false
       add :entry_id, references(:entries, on_delete: :delete_all), null: false
 
       timestamps
     end
-    create index(:credit_amounts, [:account_id, :entry_id])
-    create index(:credit_amounts, [:entry_id, :account_id])
+    create index(:amounts, [:account_id, :entry_id])
+    create index(:amounts, [:entry_id, :account_id])
 
-    create table(:debit_amounts) do
-      add :amount, :decimal, precision: 20, scale: 10, null: false
-      add :account_id, references(:accounts, on_delete: :delete_all), null: false
-      add :entry_id, references(:entries, on_delete: :delete_all), null: false
-
-      timestamps
-    end
-    create index(:debit_amounts, [:account_id, :entry_id])
-    create index(:debit_amounts, [:entry_id, :account_id])
 
   end
 end

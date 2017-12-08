@@ -3,6 +3,8 @@ defmodule Fuentes.TestFactory do
 
   alias Fuentes.{Account, Amount, Entry}
 
+    @chars "ABCDEFGHIJKLMNOPQRSTUVWXYZ" |> String.split("")
+
   def account_factory do
     %Account{
       name: "My Assets",
