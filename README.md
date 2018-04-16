@@ -1,4 +1,6 @@
 # Fuentes
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Felixir-twister%2Ffuentes.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Felixir-twister%2Ffuentes?ref=badge_shield)
+
 
 Fuentes is a double entry accounting system for your Elixir application.
 
@@ -79,3 +81,7 @@ If there are any issues with your credit and debit amounts, the insert will fail
 ### Recognition
 
 Credit (_and debits!_) go to @mbulat and his Rails Engine [Plutus](https://github.com/mbulat/plutus) for providing the inspiration for this library.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Felixir-twister%2Ffuentes.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Felixir-twister%2Ffuentes?ref=badge_large)
